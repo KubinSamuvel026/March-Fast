@@ -1,12 +1,12 @@
 Django==4.2.9
 djangorestframework==3.14.0
-psycopg2-binary==2.9.9
+psycopg[binary]==3.2.3
 django-filter==23.5
 djangorestframework-simplejwt==5.3.1
 Pillow==12.1.1
 django-cors-headers==4.3.1
 python-decouple==3.8
 dj-database-url==2.1.0
-gunicorn
+gunicorn==25.1.0
 whitenoise==6.5.0
 Faker==22.0.0
