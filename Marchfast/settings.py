@@ -79,13 +79,14 @@ TEMPLATES = [
 WSGI_APPLICATION = "Marchfast.wsgi.application"
 
 # ---------------------------------------------------------------------------
-# Database — PostgreSQL
+# Database (PostgreSQL in production, SQLite for local development)
 # ---------------------------------------------------------------------------
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        ssl_require=False,
+    )
 }
 
 # ---------------------------------------------------------------------------
@@ -181,4 +182,16 @@ CORS_ALLOW_HEADERS = [
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
+]
+
+# ---------------------------------------------------------------------------
+# CSRF / Host configuration
+# ---------------------------------------------------------------------------
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in config(
+        "CSRF_TRUSTED_ORIGINS",
+        default="http://127.0.0.1:8000",
+    ).split(",")
+    if origin.strip()
 ]
