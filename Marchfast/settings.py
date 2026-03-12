@@ -17,9 +17,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ---------------------------------------------------------------------------
 # Security
 # ---------------------------------------------------------------------------
-SECRET_KEY = config("SECRET_KEY", default="django-insecure-change-me-in-production")
-DEBUG = config("DEBUG", default=True, cast=bool)
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1").split(",")
+# These settings are expected to be provided via environment variables in production.
+# See .env.example for local development values.
+SECRET_KEY = config("SECRET_KEY")
+DEBUG = config("DEBUG", default=False, cast=bool)
+
+# Allow empty string (for local dev) and strip whitespace; ignore blank values.
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in config("ALLOWED_HOSTS", default="").split(",")
+    if host.strip()
+]
 
 # ---------------------------------------------------------------------------
 # Installed Apps
@@ -50,6 +58,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",          # Must be first
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -79,13 +88,11 @@ TEMPLATES = [
 WSGI_APPLICATION = "Marchfast.wsgi.application"
 
 # ---------------------------------------------------------------------------
-# Database (PostgreSQL in production, SQLite for local development)
+# Database
 # ---------------------------------------------------------------------------
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-        ssl_require=False,
+    'default': dj_database_url.parse(
+        config('DATABASE_URL')
     )
 }
 
@@ -167,11 +174,14 @@ CORS_ALLOWED_ORIGINS = [
     origin.strip()
     for origin in config(
         "CORS_ALLOWED_ORIGINS",
-        default="http://127.0.0.1:8000,http://localhost:5173,http://localhost:5175",
+        default="",
     ).split(",")
     if origin.strip()
 ]
-CORS_ALLOW_ALL_ORIGINS = True
+
+# Allow all origins in development only if explicitly set.
+CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", default=False, cast=bool)
+
 CORS_ALLOW_HEADERS = [
     "accept",
     "accept-encoding",
@@ -191,7 +201,7 @@ CSRF_TRUSTED_ORIGINS = [
     origin.strip()
     for origin in config(
         "CSRF_TRUSTED_ORIGINS",
-        default="http://127.0.0.1:8000",
+        default="",
     ).split(",")
     if origin.strip()
 ]
