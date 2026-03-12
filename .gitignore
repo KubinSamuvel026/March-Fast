@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*$py.class
+
+# Django
+db.sqlite3
+media/
+
+# Environments
+.env
+.env.*
+
+# Node
+node_modules/
+
+# Build outputs
+build/
+dist/
+
+# Logs
+*.log
+
+# IDEs
+.vscode/
+
+# Misc
+.DS_Store
+Thumbs.db

@@ -1,0 +1,114 @@
+/* Cart Page */
+.cart-page {
+  padding: var(--spacing) 0;
+}
+
+.cart-page__layout {
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 22px;
+}
+
+@media (max-width: 900px) {
+  .cart-page__layout { grid-template-columns: 1fr; }
+}
+
+.cart-page__items {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+
+.cart-page__table-header {
+  display: grid;
+  grid-template-columns: 1.8fr 0.8fr 0.8fr 0.6fr;
+  gap: 12px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 680px) {
+  .cart-page__table-header { display: none; }
+}
+
+.cart-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cart-page__continue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+.cart-page__continue:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.cart-page__summary {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 260px;
+}
+
+.cart-page__summary-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cart-page__summary-rows {
+  display: grid;
+  gap: 10px;
+}
+
+.cart-page__summary-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.cart-page__summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border);
+}
+
+.loading-center {
+  display: grid;
+  place-items: center;
+  padding: 80px 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--color-border);
+  box-shadow: var(--shadow);
+}

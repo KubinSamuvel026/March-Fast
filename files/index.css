@@ -1,0 +1,15 @@
+@import './styles/designSystem.css';
+
+/* additional global tweaks */
+html, body {
+  scroll-behavior: smooth;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+}
