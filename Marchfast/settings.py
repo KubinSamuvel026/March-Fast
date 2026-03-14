@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # These settings are expected to be provided via environment variables in production.
 # See .env.example for local development values.
 SECRET_KEY = config("SECRET_KEY")
-DEBUG = config("DEBUG", default=False, cast=bool)
+DEBUG = config("DEBUG", cast=bool, default=False)
 
 # Allow empty string (for local dev) and strip whitespace; ignore blank values.
 ALLOWED_HOSTS = [
@@ -174,12 +174,12 @@ CORS_ALLOWED_ORIGINS = [
     origin.strip()
     for origin in config(
         "CORS_ALLOWED_ORIGINS",
-        default="",
+        default="https://march-fast.onrender.com,http://localhost:5173,http://127.0.0.1:5173",
     ).split(",")
     if origin.strip()
 ]
 
-# Allow all origins in development only if explicitly set.
+# Allow all origins in development only if explicitly set (default False in production)
 CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", default=False, cast=bool)
 
 CORS_ALLOW_HEADERS = [
@@ -201,7 +201,8 @@ CSRF_TRUSTED_ORIGINS = [
     origin.strip()
     for origin in config(
         "CSRF_TRUSTED_ORIGINS",
-        default="",
+        default="https://march-fast.onrender.com,http://localhost:5173,http://127.0.0.1:5173",
     ).split(",")
     if origin.strip()
 ]
+
