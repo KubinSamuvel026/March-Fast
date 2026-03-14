@@ -1,7 +1,7 @@
 import os
 import django
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "marchfast.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Marchfast.settings")
 django.setup()
 
 from django.contrib.auth import get_user_model
@@ -18,7 +18,6 @@ if not User.objects.filter(username=username).exists():
         email=email,
         password=password
     )
-    print("Superuser created successfully")
+    print("Superuser created")
 else:
     print("Superuser already exists")
-    
