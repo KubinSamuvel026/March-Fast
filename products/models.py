@@ -60,7 +60,9 @@ class Product(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.name} (₹{self.price})"
+        vendor_name = self.vendor.username if self.vendor else "No Vendor"
+        category_name = self.category.name if self.category else "No Category"
+        return f"{self.name} (₹{self.price}) — {vendor_name} — {category_name}"
 
     def save(self, *args, **kwargs):
         """Auto-compute status from stock level before saving."""

@@ -41,7 +41,9 @@ class Order(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.order_id} — {self.customer_name}"
+        vendor_name = self.vendor.username if self.vendor else "No Vendor"
+        product_name = self.product.name if self.product else "No Product"
+        return f"{self.order_id} — {vendor_name} — {product_name} — {self.customer_name}"
 
     def save(self, *args, **kwargs):
         """Auto-generate a short unique order ID like MF-0001."""
