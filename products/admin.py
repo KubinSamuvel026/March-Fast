@@ -10,11 +10,14 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display   = ["id", "name", "vendor_name", "price", "stock", "status", "category_name", "product_image", "created_at"]
-    list_filter    = ["status", "category", "created_at"]
-    search_fields  = ["name", "vendor__username", "vendor__store_name"]
-    ordering       = ["-created_at"]
+    list_display    = ["id", "name", "vendor_name", "price", "stock", "status", "category_name", "product_image", "created_at"]
+    list_filter     = ["status", "category", "created_at"]
+    search_fields   = ["name", "vendor__username", "vendor__store_name"]
+    ordering        = ["-created_at"]
     readonly_fields = ["created_at", "updated_at"]
+
+    # Optimize relational lookups for safe admin rendering:
+    list_select_related = ["vendor", "category"]
 
     def vendor_name(self, obj):
         if obj.vendor:

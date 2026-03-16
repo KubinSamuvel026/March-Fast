@@ -4,11 +4,14 @@ from .models import Order
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display   = ["order_id", "vendor_name", "customer_name", "product_name", "amount", "status", "created_at"]
-    list_filter    = ["status", "created_at"]
-    search_fields  = ["order_id", "customer_name", "vendor__username", "product__name"]
-    ordering       = ["-created_at"]
+    list_display    = ["order_id", "vendor_name", "customer_name", "product_name", "amount", "status", "created_at"]
+    list_filter     = ["status", "created_at"]
+    search_fields   = ["order_id", "customer_name", "vendor__username", "product__name"]
+    ordering        = ["-created_at"]
     readonly_fields = ["order_id", "created_at", "updated_at"]
+
+    # Avoid N+1 query problem in list view; prefetch FK relations used in display methods:
+    list_select_related = ["vendor", "product"]
 
     def vendor_name(self, obj):
         if obj.vendor:

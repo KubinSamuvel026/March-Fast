@@ -15,7 +15,8 @@ class Category(models.Model):
         verbose_name_plural = "categories"
 
     def __str__(self):
-        return self.name
+        # Null-safe category label in admin and logs; fallback if name is empty.
+        return self.name or f"Unnamed Category (ID: {self.id})"
 
 
 class Product(models.Model):
@@ -60,9 +61,18 @@ class Product(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        vendor_name = self.vendor.username if self.vendor else "No Vendor"
-        category_name = self.category.name if self.category else "No Category"
-        return f"{self.name} (₹{self.price}) — {vendor_name} — {category_name}"
+        # Null-safe __str__ for Product ensures missing FK data never raises.
+        product_name = self.name or f"Unnamed Product (ID: {self.id})"
+
+        vendor_name = "No Vendor"
+        if self.vendor:
+            vendor_name = self.vendor.username or self.vendor.email or "Unknown Vendor"
+
+        category_name = "No Category"
+        if self.category:
+            category_name = self.category.name or f"Unnamed Category (ID: {self.category.id})"
+
+        return f"{product_name} (₹{self.price}) — {vendor_name} — {category_name}"
 
     def save(self, *args, **kwargs):
         """Auto-compute status from stock level before saving."""
