@@ -93,9 +93,9 @@ WSGI_APPLICATION = "Marchfast.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'your_db',
-        'USER': 'your_user',
-        'PASSWORD': 'your_password',
+        'NAME': 'marchfast',
+        'USER': 'marchuser',
+        'PASSWORD': 'strongpassword',
         'HOST': 'localhost',
         'PORT': '5432',
     }
