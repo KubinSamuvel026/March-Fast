@@ -78,7 +78,7 @@ Marchfast/
 ---
 
 ## API Base URL
-`http://localhost:8000/api/`
+`http:// http://13.60.87.219/api/`
 
 ---
 

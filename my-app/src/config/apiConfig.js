@@ -3,7 +3,7 @@
 // Override via .env: REACT_APP_API_URL=http://your-server.com/api
 
 export const API_BASE_URL =
-   import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
+   import.meta.env.VITE_API_URL || " http://13.60.87.219";
 
 export const API_TIMEOUT = 15000; // 15 seconds
 
