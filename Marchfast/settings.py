@@ -22,12 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", cast=bool, default=False)
 
-# Allow empty string (for local dev) and strip whitespace; ignore blank values.
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in config("ALLOWED_HOSTS", default="").split(",")
-    if host.strip()
-]
 
 # ---------------------------------------------------------------------------
 # Installed Apps
@@ -176,16 +170,16 @@ SIMPLE_JWT = {
 # NOTE: CORS_ALLOWED_ORIGINS must not contain empty strings (e.g. from a trailing comma).
 # Using a list comprehension ensures we strip whitespace and ignore empty values.
 CORS_ALLOWED_ORIGINS = [
-    origin.strip()
-    for origin in config(
-        "CORS_ALLOWED_ORIGINS",
-        default="https://march-fast.onrender.com,http://localhost:5173,http://127.0.0.1:5173",
-    ).split(",")
-    if origin.strip()
+    "https://marchfastn.shop",
+    "https://www.marchfastn.shop",
 ]
 
 # Allow all origins in development only if explicitly set (default False in production)
-CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", default=False, cast=bool)
+ALLOWED_HOSTS = [
+    "api.marchfastn.shop",
+    "127.0.0.1",
+    "localhost",
+]
 
 CORS_ALLOW_HEADERS = [
     "accept",
@@ -203,11 +197,8 @@ CORS_ALLOW_HEADERS = [
 # CSRF / Host configuration
 # ---------------------------------------------------------------------------
 CSRF_TRUSTED_ORIGINS = [
-    origin.strip()
-    for origin in config(
-        "CSRF_TRUSTED_ORIGINS",
-        default="https://march-fast.onrender.com,http://localhost:5173,http://127.0.0.1:5173",
-    ).split(",")
-    if origin.strip()
+    "https://marchfastn.shop",
+    "https://www.marchfastn.shop",
+    "https://api.marchfastn.shop",
 ]
 

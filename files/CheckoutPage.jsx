@@ -351,7 +351,7 @@ export default function CheckoutPage() {
                 const product = item.product || item
                 const price = parseFloat(product.price || 0)
                 const rawImg = product.image || product.image_url
-                const imageUrl = rawImg?.startsWith('/') ? `http://127.0.0.1:8000${rawImg}` : rawImg || FALLBACK_IMAGE
+                const imageUrl = rawImg?.startsWith('/') ? ` https://api.marchfastn.shop${rawImg}` : rawImg || FALLBACK_IMAGE
                 return (
                   <div key={item.id} className="checkout-page__item">
                     <div className="checkout-page__item-image">

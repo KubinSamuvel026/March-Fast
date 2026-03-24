@@ -30,7 +30,7 @@ export default function ProductCard({ product }) {
 
   const rawImageUrl = product.image || product.image_url
   const imageUrl = rawImageUrl?.startsWith('/')
-    ? `http://127.0.0.1:8000${rawImageUrl}`
+    ? ` https://api.marchfastn.shop${rawImageUrl}`
     : rawImageUrl || FALLBACK_IMAGE
 
   const price = parseFloat(product.price || 0).toFixed(2)

@@ -479,7 +479,7 @@ export default function MarchFastVendor() {
                               <tr key={p.id} className="trow" style={{ borderBottom: `1px solid ${C.border}`, background: i % 2 === 0 ? "white" : "#FAFAFE" }}>
                                 <td style={{ padding: "12px 16px" }}>
                                   {p.image || p.image_url
-                                    ? <img src={(p.image || p.image_url).startsWith('/') ? `http://127.0.0.1:8000${(p.image || p.image_url)}` : (p.image || p.image_url)} alt="" style={{ width: 40, height: 40, borderRadius: 10, objectFit: "cover", border: `2px solid ${C.border}` }} />
+                                    ? <img src={(p.image || p.image_url).startsWith('/') ? ` ${(p.image || p.image_url)}` : (p.image || p.image_url)} alt="" style={{ width: 40, height: 40, borderRadius: 10, objectFit: "cover", border: `2px solid ${C.border}` }} />
                                     : <div style={{ width: 40, height: 40, background: C.bg, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, border: `2px solid ${C.border}` }}>🏷️</div>
                                   }
                                 </td>
