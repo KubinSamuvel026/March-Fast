@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '  https://api.marchfastn.shop'
+const API_BASE_URL = import.meta.env.VITE_API_URL || ' https://marchfastn.shop'
 
 const axiosClient = axios.create({
   baseURL: API_BASE_URL,
