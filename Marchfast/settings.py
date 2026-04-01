@@ -170,7 +170,7 @@ SIMPLE_JWT = {
 # NOTE: CORS_ALLOWED_ORIGINS must not contain empty strings (e.g. from a trailing comma).
 # Using a list comprehension ensures we strip whitespace and ignore empty values.
 CORS_ALLOWED_ORIGINS = [
-    "https://marchfastn.shop",
+    "https://marchfastn.shop/api",
     "https://www.marchfastn.shop",
 ]
 
@@ -197,8 +197,8 @@ CORS_ALLOW_HEADERS = [
 # CSRF / Host configuration
 # ---------------------------------------------------------------------------
 CSRF_TRUSTED_ORIGINS = [
-    "https://marchfastn.shop",
+    "https://marchfastn.shop/api",
     "https://www.marchfastn.shop",
-    "https://marchfastn.shop",
+    "https://marchfastn.shop/api",
 ]
 

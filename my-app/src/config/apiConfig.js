@@ -2,8 +2,7 @@
 // Central place for all API configuration.
 // Override via .env: VITE_API_URL=https://your-server.com/api
 
-const apiUrl = (import.meta.env.VITE_API_URL || "https://marchfastn.shop").replace(/\/+$/, "");
-export const API_BASE_URL = apiUrl.endsWith("/api") ? apiUrl : `${apiUrl}/api`;
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "https://marchfastn.shop/api";
 export const BASE_URL = API_BASE_URL;
 
 export const API_TIMEOUT = 15000; // 15 seconds
