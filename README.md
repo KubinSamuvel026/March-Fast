@@ -78,7 +78,7 @@ Marchfast/
 ---
 
 ## API Base URL
-`http://  https://api.marchfastn.shop/api/`
+`http://  https://marchfastn.shop/api/`
 
 ---
 

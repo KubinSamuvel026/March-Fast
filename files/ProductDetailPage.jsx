@@ -25,7 +25,7 @@ export default function ProductDetailPage() {
       .then((data) => {
         setProduct(data)
         const rawImg = data.image || data.image_url
-        setActiveImg(rawImg?.startsWith('/') ? ` https://api.marchfastn.shop${rawImg}` : rawImg || FALLBACK_IMAGE)
+        setActiveImg(rawImg?.startsWith('/') ? ` https://marchfastn.shop${rawImg}` : rawImg || FALLBACK_IMAGE)
       })
       .catch((err) => setError(err.friendlyMessage || 'Product not found.'))
       .finally(() => setLoading(false))
@@ -93,7 +93,7 @@ export default function ProductDetailPage() {
             {product.images?.length > 1 && (
               <div className="detail-page__thumbs">
                 {product.images.map((img, i) => {
-                  const thumbUrl = img?.startsWith('/') ? ` https://api.marchfastn.shop${img}` : img
+                  const thumbUrl = img?.startsWith('/') ? ` https://marchfastn.shop${img}` : img
                   return (
                     <button
                       key={i}

@@ -10,7 +10,7 @@ export default function CartItem({ item }) {
   const price = parseFloat(product.price || item.price || 0)
   const subtotal = (price * item.quantity).toFixed(2)
   const rawImg = product.image || product.image_url
-  const imageUrl = rawImg?.startsWith('/') ? ` https://api.marchfastn.shop${rawImg}` : rawImg || FALLBACK_IMAGE
+  const imageUrl = rawImg?.startsWith('/') ? ` https://marchfastn.shop${rawImg}` : rawImg || FALLBACK_IMAGE
 
   return (
     <div className="cart-item">

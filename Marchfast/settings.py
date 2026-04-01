@@ -199,6 +199,6 @@ CORS_ALLOW_HEADERS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://marchfastn.shop",
     "https://www.marchfastn.shop",
-    "https://api.marchfastn.shop",
+    "https://marchfastn.shop",
 ]
 
