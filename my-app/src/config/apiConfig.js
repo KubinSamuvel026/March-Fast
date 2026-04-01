@@ -1,9 +1,9 @@
 // src/config/apiConfig.js
 // Central place for all API configuration.
-// Override via .env: REACT_APP_API_URL=http://your-server.com/api
+// Override via .env: VITE_API_URL=https://your-server.com/api
 
-export const BASE_URL = "https://marchfastn.shop";
-import.meta.env.VITE_API_URL || "  https://marchfastn.shop";
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "https://marchfastn.shop";
+export const BASE_URL = API_BASE_URL;
 
 export const API_TIMEOUT = 15000; // 15 seconds
 
