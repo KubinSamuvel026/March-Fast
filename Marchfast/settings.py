@@ -170,19 +170,17 @@ SIMPLE_JWT = {
 # NOTE: CORS_ALLOWED_ORIGINS must not contain empty strings (e.g. from a trailing comma).
 # Using a list comprehension ensures we strip whitespace and ignore empty values.
 CORS_ALLOWED_ORIGINS = [
-    "https://marchfastn.shop/api",
+    "https://march-fast-git-main-kubinsamuel00326-7526s-projects.vercel.app",
+    "https://marchfastn.shop",
     "https://www.marchfastn.shop",
-    "https://march-fast-git-main-kubinsamuel00326-7526s-projects.vercel.app/"
 ]
 
 # Allow all origins in development only if explicitly set (default False in production)
 ALLOWED_HOSTS = [
-    "api.marchfastn.shop",
+    "marchfastn.shop",
+    "www.marchfastn.shop",
     "127.0.0.1",
     "localhost",
-    "https://march-fast-git-main-kubinsamuel00326-7526s-projects.vercel.app/",
-    "https://marchfastn.shop/api",
-    "https://marchfastn.shop/",
 ]
 
 CORS_ALLOW_HEADERS = [
@@ -201,9 +199,8 @@ CORS_ALLOW_HEADERS = [
 # CSRF / Host configuration
 # ---------------------------------------------------------------------------
 CSRF_TRUSTED_ORIGINS = [
-    "https://marchfastn.shop/api",
+    "https://march-fast-git-main-kubinsamuel00326-7526s-projects.vercel.app",
+    "https://marchfastn.shop",
     "https://www.marchfastn.shop",
-    "https://marchfastn.shop/api",
-    "https://march-fast-git-main-kubinsamuel00326-7526s-projects.vercel.app/"
 ]
 
