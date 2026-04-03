@@ -98,7 +98,7 @@ export default function Navbar() {
 
           {/* Vendor Dashboard Button */}
           <a
-            href="https://march-fast.vercel.app/login"
+            href="https://march-fast.vercel.app"
             className="navbar__vendor-btn"
             target="_blank"
             rel="noopener noreferrer"
@@ -185,7 +185,7 @@ export default function Navbar() {
               <NavLink to="/register">Register</NavLink>
             </>
           )}
-          <a href="https://march-fast.vercel.app/login" target="_blank" rel="noopener noreferrer">
+          <a href="https://march-fast.vercel.app" target="_blank" rel="noopener noreferrer">
             Vendor Dashboard ↗
           </a>
         </div>
