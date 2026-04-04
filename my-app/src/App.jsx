@@ -8,11 +8,14 @@ import Register from "./pages/Register";
 import MarchFastVendor from "./MarchFastVendor";
 
 function App() {
+  const isMobile = window.innerWidth < 768;
+
   return (
     <BrowserRouter>
       <AuthProvider>
         <Navbar />
-        <Routes>
+        <div style={{ paddingTop: isMobile ? '80px' : '0px' }}>
+          <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
@@ -41,7 +44,8 @@ function App() {
           />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
+          </Routes>
+        </div>
       </AuthProvider>
     </BrowserRouter>
   );
