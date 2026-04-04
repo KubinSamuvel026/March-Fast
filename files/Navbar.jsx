@@ -12,6 +12,7 @@ export default function Navbar() {
   const { items: wishlistItems, clearWishlist } = useWishlist()
   const location = useLocation()
   const navigate = useNavigate()
+  const isMobile = window.innerWidth < 768
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -60,7 +61,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav Links */}
-        <ul className="navbar__links">
+        <ul className="navbar__links" style={{ display: isMobile ? 'none' : 'flex' }}>
           <li>
             <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>
               Home
@@ -75,15 +76,17 @@ export default function Navbar() {
 
         {/* Action Icons */}
         <div className="navbar__actions">
-          {/* Wishlist */}
-          <Link to="/wishlist" className="navbar__icon-btn" aria-label="Wishlist">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-            {wishlistItems.length > 0 && (
-              <span className="navbar__badge">{wishlistItems.length}</span>
-            )}
-          </Link>
+          {/* Wishlist - hide on mobile */}
+          {!isMobile && (
+            <Link to="/wishlist" className="navbar__icon-btn" aria-label="Wishlist">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+              {wishlistItems.length > 0 && (
+                <span className="navbar__badge">{wishlistItems.length}</span>
+              )}
+            </Link>
+          )}
 
           {/* Cart */}
           <Link to="/cart" className="navbar__icon-btn" aria-label="Cart">
@@ -96,46 +99,52 @@ export default function Navbar() {
             )}
           </Link>
 
-          {/* Vendor Dashboard Button */}
-          <a
-            href="https://march-fast.vercel.app"
-            className="navbar__vendor-btn"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-              <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-            </svg>
-            Vendor
-          </a>
-
-          {/* Login / Logout */}
-          {isLoggedIn ? (
-            <button
-              className="navbar__logout-btn"
-              onClick={handleLogout}
-              style={{
-                background: 'linear-gradient(135deg, #FF6B35, #FF8C61)',
-                color: '#fff',
-                borderRadius: '10px',
-                padding: '8px 16px',
-                border: 'none',
-                cursor: 'pointer',
-                fontWeight: 600,
-                marginLeft: '12px',
-              }}
+          {/* Vendor Dashboard Button - hide on mobile */}
+          {!isMobile && (
+            <a
+              href="https://march-fast.vercel.app"
+              className="navbar__vendor-btn"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Logout
-            </button>
-          ) : (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+              </svg>
+              Vendor
+            </a>
+          )}
+
+          {/* Login / Logout - hide on mobile */}
+          {!isMobile && (
             <>
-              <Link to="/login" className="navbar__link">
-                Login
-              </Link>
-              <Link to="/register" className="navbar__link navbar__link--primary">
-                Register
-              </Link>
+              {isLoggedIn ? (
+                <button
+                  className="navbar__logout-btn"
+                  onClick={handleLogout}
+                  style={{
+                    background: 'linear-gradient(135deg, #FF6B35, #FF8C61)',
+                    color: '#fff',
+                    borderRadius: '10px',
+                    padding: '8px 16px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontWeight: 600,
+                    marginLeft: '12px',
+                  }}
+                >
+                  Logout
+                </button>
+              ) : (
+                <>
+                  <Link to="/login" className="navbar__link">
+                    Login
+                  </Link>
+                  <Link to="/register" className="navbar__link navbar__link--primary">
+                    Register
+                  </Link>
+                </>
+              )}
             </>
           )}
 

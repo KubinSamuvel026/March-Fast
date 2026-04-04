@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const isMobile = window.innerWidth < 768;
 
   return (
     <nav style={{
@@ -33,29 +34,35 @@ export default function Navbar() {
             <span style={{ color: "#374151", fontSize: 13, fontWeight: 600 }}>
               {user.store_name || user.username || "Vendor"}
             </span>
-            <button
-              onClick={logout}
-              style={{
-                border: "1px solid #E5E7EB",
-                background: "white",
-                padding: "8px 12px",
-                borderRadius: 10,
-                cursor: "pointer",
-                fontSize: 13,
-                fontWeight: 600,
-              }}
-            >
-              Logout
-            </button>
+            {!isMobile && (
+              <button
+                onClick={logout}
+                style={{
+                  border: "1px solid #E5E7EB",
+                  background: "white",
+                  padding: "8px 12px",
+                  borderRadius: 10,
+                  cursor: "pointer",
+                  fontSize: 13,
+                  fontWeight: 600,
+                }}
+              >
+                Logout
+              </button>
+            )}
           </>
         ) : (
           <>
-            <Link to="/login" style={{ color: "#3B82F6", fontWeight: 600, fontSize: 13 }}>
-              Login
-            </Link>
-            <Link to="/register" style={{ color: "#10B981", fontWeight: 600, fontSize: 13 }}>
-              Sign up
-            </Link>
+            {!isMobile && (
+              <>
+                <Link to="/login" style={{ color: "#3B82F6", fontWeight: 600, fontSize: 13 }}>
+                  Login
+                </Link>
+                <Link to="/register" style={{ color: "#10B981", fontWeight: 600, fontSize: 13 }}>
+                  Sign up
+                </Link>
+              </>
+            )}
           </>
         )}
       </div>

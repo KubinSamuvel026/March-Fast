@@ -68,7 +68,11 @@ export default function HomePage() {
 
       {/* ── Feature Badges ────────────────────────── */}
       <section className="perks">
-        <div className="container perks__grid">
+        <div className="container perks__grid" style={{
+          display: 'grid',
+          gridTemplateColumns: window.innerWidth < 768 ? '1fr' : 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '20px'
+        }}>
           {[
             { icon: '🚚', title: 'Fast Delivery', desc: 'Same-day in major cities' },
             { icon: '🔒', title: 'Secure Checkout', desc: 'Encrypted & protected' },
@@ -112,7 +116,11 @@ export default function HomePage() {
               <Link to="/products" className="btn btn-primary">Browse All</Link>
             </div>
           ) : (
-            <div className="featured__grid">
+            <div className="featured__grid" style={{
+              display: 'grid',
+              gridTemplateColumns: window.innerWidth < 768 ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))',
+              gap: '20px'
+            }}>
               {featured.map((product, i) => (
                 <div
                   key={product.id}

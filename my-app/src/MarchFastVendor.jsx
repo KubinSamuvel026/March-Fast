@@ -8,6 +8,7 @@ import { useProducts } from "./hooks/useProducts";
 import { useRecentOrders } from "./hooks/useOrders";
 import { useAnalytics } from "./hooks/useAnalytics";
 import { useCategories } from "./hooks/useCategories";
+import SettingsPage from './pages/SettingsPage';
 import { getImageUrl, handleImageError } from "./utils/imageUrlBuilder";
 import {
   getNotifications,
@@ -114,8 +115,11 @@ export default function MarchFastVendor() {
     ? "orders"
     : location.pathname.startsWith("/analytics")
       ? "analytics"
-      : "dashboard";
+      : location.pathname.startsWith("/settings")
+        ? "settings"
+        : "dashboard";
 
+  const isMobile = window.innerWidth < 768;
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editTarget, setEditTarget] = useState(null);   // product being edited
@@ -362,7 +366,7 @@ export default function MarchFastVendor() {
         </div>
       </header>
 
-      <div style={{ display: "flex", flex: 1 }}>
+      <div style={{ display: "flex", flex: 1, flexDirection: isMobile ? "column" : "row" }}>
         {/* ── SIDEBAR ─────────────────────────────────────────────────────── */}
         <aside style={{ width: sidebarOpen ? 220 : 0, background: "white", borderRight: `2px solid ${C.border}`, overflow: "hidden", transition: "width .3s", flexShrink: 0, display: "flex", flexDirection: "column" }}>
           <div style={{ padding: "20px 12px 12px", flex: 1 }}>
@@ -394,6 +398,8 @@ export default function MarchFastVendor() {
             <OrdersPage showToast={showToast} />
           ) : activeNav === "analytics" ? (
             <AnalyticsPage showToast={showToast} />
+          ) : activeNav === "settings" ? (
+            <SettingsPage showToast={showToast} />
           ) : (
             <>
 
