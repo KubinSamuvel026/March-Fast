@@ -11,7 +11,7 @@ import { unwrapResponse } from "../utils/apiResponseHandler";
  * Optional filters: { status, category, search }
  */
 export async function getProducts(filters = {}) {
-  const params = {};
+  const params = { vendor_only: true };
   if (filters.status)   params.status   = filters.status;
   if (filters.category) params.category = filters.category;
   if (filters.search)   params.search   = filters.search;
@@ -60,7 +60,7 @@ export async function deleteProduct(id) {
  */
 export async function searchProducts(query) {
   const response = await axiosClient.get(ENDPOINTS.PRODUCT_SEARCH, {
-    params: { q: query },
+    params: { q: query, vendor_only: true },
   });
   return unwrapResponse(response); // { products: [], total: N, query }
 }
