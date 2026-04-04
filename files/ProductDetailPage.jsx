@@ -7,6 +7,13 @@ import './ProductDetailPage.css'
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80'
 
+const getImageUrl = (imagePath, fallback = FALLBACK_IMAGE) => {
+  if (!imagePath) return fallback
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) return imagePath
+  if (imagePath.startsWith('/')) return `https://api.marchfastn.shop${imagePath}`
+  return imagePath
+}
+
 export default function ProductDetailPage() {
   const { id } = useParams()
   const [product, setProduct] = useState(null)
@@ -24,8 +31,7 @@ export default function ProductDetailPage() {
     getProductById(id)
       .then((data) => {
         setProduct(data)
-        const rawImg = data.image || data.image_url
-        setActiveImg(rawImg?.startsWith('/') ? ` https://api.marchfastn.shop/api${rawImg}` : rawImg || FALLBACK_IMAGE)
+        setActiveImg(getImageUrl(data.image || data.image_url))
       })
       .catch((err) => setError(err.friendlyMessage || 'Product not found.'))
       .finally(() => setLoading(false))
@@ -93,7 +99,7 @@ export default function ProductDetailPage() {
             {product.images?.length > 1 && (
               <div className="detail-page__thumbs">
                 {product.images.map((img, i) => {
-                  const thumbUrl = img?.startsWith('/') ? ` https://api.marchfastn.shop/api${img}` : img
+                  const thumbUrl = getImageUrl(img)
                   return (
                     <button
                       key={i}

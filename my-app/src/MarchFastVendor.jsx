@@ -8,6 +8,7 @@ import { useProducts } from "./hooks/useProducts";
 import { useRecentOrders } from "./hooks/useOrders";
 import { useAnalytics } from "./hooks/useAnalytics";
 import { useCategories } from "./hooks/useCategories";
+import { getImageUrl, handleImageError } from "./utils/imageUrlBuilder";
 import {
   getNotifications,
   markNotificationRead,
@@ -172,7 +173,7 @@ export default function MarchFastVendor() {
       description: product.description || "",
       image: null,
     });
-    setPreviewUrl(product.image_url || null);
+    setPreviewUrl(getImageUrl(product.image_url || product.image) || null);
     setShowModal(true);
   };
 
@@ -479,7 +480,7 @@ export default function MarchFastVendor() {
                               <tr key={p.id} className="trow" style={{ borderBottom: `1px solid ${C.border}`, background: i % 2 === 0 ? "white" : "#FAFAFE" }}>
                                 <td style={{ padding: "12px 16px" }}>
                                   {p.image || p.image_url
-                                    ? <img src={(p.image || p.image_url).startsWith('/') ? ` ${(p.image || p.image_url)}` : (p.image || p.image_url)} alt="" style={{ width: 40, height: 40, borderRadius: 10, objectFit: "cover", border: `2px solid ${C.border}` }} />
+                                    ? <img src={getImageUrl(p.image || p.image_url)} alt={p.name} style={{ width: 40, height: 40, borderRadius: 10, objectFit: "cover", border: `2px solid ${C.border}` }} onError={(e) => handleImageError(e, "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect fill='%23f5f5f5' width='40' height='40'/%3E%3C/svg%3E")} />
                                     : <div style={{ width: 40, height: 40, background: C.bg, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, border: `2px solid ${C.border}` }}>🏷️</div>
                                   }
                                 </td>
@@ -684,8 +685,9 @@ export default function MarchFastVendor() {
                 <div style={{ marginBottom: 12, display: "flex", alignItems: "flex-start", gap: 12 }}>
                   <img
                     src={previewUrl}
-                    alt="Preview"
+                    alt="Product preview"
                     style={{ width: 80, height: 80, objectFit: "cover", borderRadius: 12, border: `2px solid ${C.border}` }}
+                    onError={(e) => handleImageError(e, "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23f5f5f5' width='80' height='80'/%3E%3C/svg%3E")}
                   />
                   <button
                     onClick={() => { setPreviewUrl(null); setForm({ ...form, image: null }) }}

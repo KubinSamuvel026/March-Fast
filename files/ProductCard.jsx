@@ -5,6 +5,13 @@ import './ProductCard.css'
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80'
 
+const getImageUrl = (imagePath, fallback = FALLBACK_IMAGE) => {
+  if (!imagePath) return fallback
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) return imagePath
+  if (imagePath.startsWith('/')) return `https://api.marchfastn.shop${imagePath}`
+  return imagePath
+}
+
 export default function ProductCard({ product }) {
   const { addItem: addToCart, isInCart } = useCart()
   const { addItem: addToWishlist, removeItem: removeWishlist, isWishlisted } = useWishlist()
@@ -28,10 +35,7 @@ export default function ProductCard({ product }) {
     }
   }
 
-  const rawImageUrl = product.image || product.image_url
-  const imageUrl = rawImageUrl?.startsWith('/')
-    ? ` https://api.marchfastn.shop/api${rawImageUrl}`
-    : rawImageUrl || FALLBACK_IMAGE
+  const imageUrl = getImageUrl(product.image || product.image_url)
 
   const price = parseFloat(product.price || 0).toFixed(2)
   const stock = product.stock ?? product.quantity ?? null

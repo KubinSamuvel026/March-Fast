@@ -4,6 +4,13 @@ import './WishlistPage.css'
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&q=80'
 
+const getImageUrl = (imagePath, fallback = FALLBACK_IMAGE) => {
+  if (!imagePath) return fallback
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) return imagePath
+  if (imagePath.startsWith('/')) return `https://api.marchfastn.shop${imagePath}`
+  return imagePath
+}
+
 export default function WishlistPage() {
   const { items, loading, removeItem, moveToCart } = useWishlist()
 
@@ -37,7 +44,7 @@ export default function WishlistPage() {
             {items.map((item) => {
               const product = item.product || item
               const price = parseFloat(product.price || 0).toFixed(2)
-              const imageUrl = product.image || product.image_url || FALLBACK_IMAGE
+              const imageUrl = getImageUrl(product.image || product.image_url)
               const outOfStock = (product.stock ?? product.quantity) === 0
 
               return (

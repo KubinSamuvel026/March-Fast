@@ -3,14 +3,20 @@ import './CartItem.css'
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&q=80'
 
+const getImageUrl = (imagePath, fallback = FALLBACK_IMAGE) => {
+  if (!imagePath) return fallback
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) return imagePath
+  if (imagePath.startsWith('/')) return `https://api.marchfastn.shop${imagePath}`
+  return imagePath
+}
+
 export default function CartItem({ item }) {
   const { updateItem, removeItem } = useCart()
 
   const product = item.product || item
   const price = parseFloat(product.price || item.price || 0)
   const subtotal = (price * item.quantity).toFixed(2)
-  const rawImg = product.image || product.image_url
-  const imageUrl = rawImg?.startsWith('/') ? ` https://api.marchfastn.shop/api${rawImg}` : rawImg || FALLBACK_IMAGE
+  const imageUrl = getImageUrl(product.image || product.image_url)
 
   return (
     <div className="cart-item">

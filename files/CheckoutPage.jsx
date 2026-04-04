@@ -7,6 +7,13 @@ import './CheckoutPage.css'
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=120&q=80'
 
+const getImageUrl = (imagePath, fallback = FALLBACK_IMAGE) => {
+  if (!imagePath) return fallback
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) return imagePath
+  if (imagePath.startsWith('/')) return `https://api.marchfastn.shop${imagePath}`
+  return imagePath
+}
+
 const initialForm = {
   first_name: '',
   last_name: '',
@@ -350,8 +357,7 @@ export default function CheckoutPage() {
               {items.map((item) => {
                 const product = item.product || item
                 const price = parseFloat(product.price || 0)
-                const rawImg = product.image || product.image_url
-                const imageUrl = rawImg?.startsWith('/') ? ` https://api.marchfastn.shop/api${rawImg}` : rawImg || FALLBACK_IMAGE
+                const imageUrl = getImageUrl(product.image || product.image_url)
                 return (
                   <div key={item.id} className="checkout-page__item">
                     <div className="checkout-page__item-image">
