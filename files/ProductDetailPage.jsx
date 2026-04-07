@@ -106,7 +106,7 @@ export default function ProductDetailPage() {
                       className={`detail-page__thumb ${activeImg === thumbUrl ? 'active' : ''}`}
                       onClick={() => setActiveImg(thumbUrl)}
                     >
-                      <img src={thumbUrl} alt={`View ${i + 1}`} />
+                      <img src={thumbUrl} alt={`View ₹{i + 1}`} />
                     </button>
                   )
                 })}
