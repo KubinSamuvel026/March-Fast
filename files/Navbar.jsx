@@ -102,7 +102,7 @@ export default function Navbar() {
           {/* Vendor Dashboard Button - hide on mobile */}
           {!isMobile && (
             <a
-              href="https://march-fast.vercel.app"
+              href="https://march-fast-git-main-kubinsamuel00326-7526s-projects.vercel.app/"
               className="navbar__vendor-btn"
               target="_blank"
               rel="noopener noreferrer"
