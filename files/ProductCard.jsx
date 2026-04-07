@@ -74,9 +74,9 @@ export default function ProductCard({ product }) {
         )}
         <h3 className="product-card__name">{product.name}</h3>
         <div className="product-card__footer">
-          <span className="product-card__price">${price}</span>
+          <span className="product-card__price">₹ {price}</span>
           <button
-            className={`product-card__cart-btn ${inCart ? 'in-cart' : ''} ${outOfStock ? 'disabled' : ''}`}
+            className={`product-card__cart-btn ₹ {inCart ? 'in-cart' : ''} ₹ {outOfStock ? 'disabled' : ''}`}
             onClick={handleCartClick}
             disabled={outOfStock}
             aria-label={inCart ? 'In cart' : 'Add to cart'}
