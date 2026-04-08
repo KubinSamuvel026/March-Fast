@@ -4,7 +4,6 @@ import ProductCard from './ProductCard.jsx'
 import './ProductsPage.css'
 
 export default function ProductsPage() {
-
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -14,21 +13,17 @@ export default function ProductsPage() {
 
   const [sortBy, setSortBy] = useState('default')
 
-  // NEW
+  // Category states
   const [category, setCategory] = useState('all')
   const [categories, setCategories] = useState([])
 
   const fetchProducts = useCallback(async (q = '') => {
-
     setLoading(true)
     setError(null)
 
     try {
-
       const params = q ? { search: q } : {}
       const res = await axiosClient.get('/products/', { params })
-
-      console.log('Product API response:', res.data)
 
       const payload = res.data || {}
 
@@ -40,14 +35,13 @@ export default function ProductsPage() {
         []
 
       const productList = Array.isArray(list) ? list : []
-
       setProducts(productList)
 
-      // Extract categories automatically
+      // Extract category names from backend field "category_name"
       const cats = [
         ...new Set(
           productList
-            .map(p => p.category?.name || p.category)
+            .map(p => p.category_name)
             .filter(Boolean)
         )
       ]
@@ -55,98 +49,63 @@ export default function ProductsPage() {
       setCategories(cats)
 
     } catch (err) {
-
       console.error('Product fetch error:', err)
       setError(err.friendlyMessage || 'Failed to load products.')
-
     } finally {
       setLoading(false)
     }
-
   }, [])
 
   useEffect(() => {
     fetchProducts(search)
   }, [search, fetchProducts])
 
-
   // Debounce search
   useEffect(() => {
-
-    const timer = setTimeout(() => {
-      setSearch(searchInput)
-    }, 400)
-
+    const timer = setTimeout(() => setSearch(searchInput), 400)
     return () => clearTimeout(timer)
-
   }, [searchInput])
 
-
-  // FILTER BY CATEGORY
+  // Category filter
   const filteredProducts =
     category === 'all'
       ? products
-      : products.filter(p =>
-          (p.category?.name || p.category) === category
-        )
+      : products.filter(p => p.category_name === category)
 
-
-  // SORT
+  // Sorting
   const sorted = [...filteredProducts].sort((a, b) => {
-
-    if (sortBy === 'price-asc')
-      return parseFloat(a.price) - parseFloat(b.price)
-
-    if (sortBy === 'price-desc')
-      return parseFloat(b.price) - parseFloat(a.price)
-
-    if (sortBy === 'name-asc')
-      return a.name.localeCompare(b.name)
-
+    if (sortBy === 'price-asc') return parseFloat(a.price) - parseFloat(b.price)
+    if (sortBy === 'price-desc') return parseFloat(b.price) - parseFloat(a.price)
+    if (sortBy === 'name-asc') return a.name.localeCompare(b.name)
     return 0
   })
 
-
   return (
     <main className="products-page">
-
       <div className="container">
 
         {/* Header */}
         <div className="products-page__header">
           <div>
-
-            <h1 className="section-title">
-              All Products
-            </h1>
-
+            <h1 className="section-title">All Products</h1>
             <p className="section-subtitle">
               {loading
                 ? 'Loading...'
-                : `${products.length} product${products.length !== 1 ? 's' : ''} available`
-              }
+                : `${products.length} product${products.length !== 1 ? 's' : ''} available`}
             </p>
-
           </div>
         </div>
-
 
         {/* Toolbar */}
         <div className="products-page__toolbar">
 
-          {/* SEARCH */}
+          {/* Search */}
           <div className="products-page__search">
-
-            <svg width="18" height="18" viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round">
-
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2"
+              strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"/>
               <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-
             </svg>
 
             <input
@@ -158,7 +117,6 @@ export default function ProductsPage() {
             />
 
             {searchInput && (
-
               <button
                 onClick={() => {
                   setSearchInput('')
@@ -168,22 +126,16 @@ export default function ProductsPage() {
               >
                 ✕
               </button>
-
             )}
-
           </div>
 
-
-          {/* CATEGORY FILTER */}
+          {/* Category filter */}
           <div className="products-page__sort">
-
             <label>Category:</label>
-
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-
               <option value="all">All</option>
 
               {categories.map((cat, i) => (
@@ -191,41 +143,29 @@ export default function ProductsPage() {
                   {cat}
                 </option>
               ))}
-
             </select>
-
           </div>
 
-
-          {/* SORT */}
+          {/* Sort */}
           <div className="products-page__sort">
-
             <label>Sort:</label>
-
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
-
               <option value="default">Default</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
               <option value="name-asc">Name: A–Z</option>
-
             </select>
-
           </div>
 
         </div>
 
-
         {/* Error */}
         {error && (
-
           <div className="error-banner">
-
             ⚠️ {error}
-
             <button
               onClick={() => fetchProducts(search)}
               style={{
@@ -240,41 +180,25 @@ export default function ProductsPage() {
             >
               Retry
             </button>
-
           </div>
-
         )}
 
-
-        {/* PRODUCTS GRID */}
+        {/* Grid */}
         {loading ? (
-
           <div className="loading-center">
             <div className="spinner" />
           </div>
-
         ) : sorted.length === 0 ? (
-
           <div className="empty-state">
-
-            <svg width="64" height="64"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round">
-
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="1.5"
+              strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"/>
               <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-
             </svg>
 
             <h3>No products found</h3>
-
-            <p>
-              Try a different search term or clear the filter.
-            </p>
+            <p>Try a different search term or clear the filter.</p>
 
             <button
               className="btn btn-primary"
@@ -286,30 +210,18 @@ export default function ProductsPage() {
             >
               Clear Filters
             </button>
-
           </div>
-
         ) : (
-
           <div className="products-page__grid">
-
             {sorted.map((product, i) => (
-
-              <div
-                key={product.id}
-                style={{ animationDelay: `${i * 0.04}s` }}
-              >
+              <div key={product.id} style={{ animationDelay: `${i * 0.04}s` }}>
                 <ProductCard product={product} />
               </div>
-
             ))}
-
           </div>
-
         )}
 
       </div>
-
     </main>
   )
 }
